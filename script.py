@@ -9,9 +9,9 @@ driver = webdriver.Chrome('./chromedriver.exe')
 driver = webdriver.Chrome(chrome_options=options)
 driver.get("https://www.facebook.com/")
 email_emt = driver.find_element_by_id("email")
-email_emt.send_keys("guanyukevin.chen@gmail.com")
+email_emt.send_keys("username")
 password_emt = driver.find_elements_by_id("pass")[0]
-password_emt.send_keys("chenguanyu")
+password_emt.send_keys("password")
 submit_btn_emt = driver.find_elements_by_id("loginbutton")[0]
 submit_btn_emt.click()
 parentElement = driver.find_elements_by_id("universalNav")[0]
