@@ -3,7 +3,10 @@ from selenium.webdriver.common.keys import Keys
 import time
 import keyboard
 import string
+from random import randint
+from random import sample
 
+numOfMistakes = randint(1, 4)
 options = webdriver.ChromeOptions();
 options.add_argument("--disable-notifications");
 
@@ -24,8 +27,8 @@ textToInput = textToInput.find_element_by_tag_name("div")
 textToInput = textToInput.find_element_by_tag_name("div")
 textToInput = textToInput.find_elements_by_tag_name("span")
 text = ""
+posOfMistakes = []
 for i in range(len(textToInput)):
-    print(textToInput[i].text)
     if (i == 1):
         if (len(textToInput) % 2 == 0):
             if (textToInput[i].text[0] in string.punctuation):
@@ -41,9 +44,20 @@ for i in range(len(textToInput)):
             continue
     text = text + textToInput[i].text
 time.sleep(2)
-for i in text:
-    if (i == " "):
+for i in range(numOfMistakes):
+    tempPos = randint(0, len(text)-1)
+    while (tempPos in posOfMistakes):
+        tempPos = randint(0, len(text)-1)
+    posOfMistakes.append(tempPos)
+for i in range(len(text)):
+    if (text[i] == " "):
         keyboard.press_and_release('space')
     else:
-        keyboard.write(i)
+        keyboard.write(text[i])
+        if (i in posOfMistakes):
+            numOfWLetters = randint(1,3)
+            keyboard.write("".join(sample(string.ascii_letters, numOfWLetters)))
+            time.sleep(1)
+            for i in range(numOfWLetters):
+                keyboard.press_and_release('backspace')
     time.sleep(0.05)
